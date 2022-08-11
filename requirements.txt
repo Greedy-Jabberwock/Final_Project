@@ -31,7 +31,7 @@ pycparser==2.21
 PyJWT==2.4.0
 pypiwin32==223
 pyunpack==0.3
-# pywin32==304
+pywin32==304
 requests==2.28.1
 SQLAlchemy==1.4.39
 urllib3==1.26.11
