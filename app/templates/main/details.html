@@ -1,0 +1,53 @@
+{% extends 'partials/base.html' %}
+
+{% block title %}
+Book Details
+{% endblock title %}
+
+{% block content %}
+    <div class="album py-5 bg-light">
+        <div class="container-fluid">
+            <div class="card mx-3 d-flex flex-row align-items-center justify-content-start">
+                <div class="card-head mx-3" style="width:40%">
+                    <img src="{{book.image}}" alt="" style="width:220px">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title justify-self-center border-bottom text-center pb-3">"{{book.title}}"</h5>
+                    <table class="table text-center">
+                        <thead>
+                            <tr>
+                                <th>Author</th>
+                                <th>Genre</th>
+                                <th>Release year</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{authors}}</td>
+                                <td>{{book.genres[0].genre}}</td>
+                                <td>{{book.release_year}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5 class="text-center">Description:</h5>
+                    <p class="border-bottom pb-2">{{book.description | safe}}</p>
+                    {% if current_user.is_authenticated %}
+                        {% if book in current_user.bookshelf.books %}
+                            <div class="text-center">
+                                <a class="btn btn-primary" href="{{url_for('main_bp.listening', book_id=book.id)}}">Listen</a>
+                            </div>
+                        {% else %}
+                            <form class="text-center" action="{{url_for('main_bp.add_book', book_id=book.id)}}" method="POST">
+                                <button type="submit"  class="btn btn-primary">Add to my bookshelf</button>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <div class="alert alert-info text-center" role="alert">
+                            You need to <a href="{{url_for('auth_bp.login')}}">log in</a> to add book at the bookshelf.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

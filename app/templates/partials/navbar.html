@@ -1,0 +1,24 @@
+<header class="d-flex align-items-around justify-content-around p-3 border-bottom">
+
+  
+  <div class="d-flex flex-row align-items-center justify-content-center justify-content-md-around w-100 ps-3 fs-4">
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      <li><a href="{{url_for('main_bp.index')}}" class="btn px-2 me-2 btn-outline-dark fs-5">Home</a></li>
+      <li><a href="{{url_for('main_bp.about')}}" class="btn px-2 btn-outline-dark fs-5">About</a></li>
+    </ul>
+
+    <a href="{{url_for('main_bp.index')}}">
+      <img class="m-4" src="{{url_for('static', filename='img/audiobook.png')}}" style="width:50px">
+    </a>
+
+    <div class="text-end">
+      {% if not current_user.is_authenticated %}
+        <a href="{{url_for('auth_bp.login')}}" type="button" class="btn btn-outline-dark me-2 fs-5">Login</a>
+        <a href="{{url_for('auth_bp.signup')}}" type="button" class="btn btn-dark fs-5">Sign-up</a>
+      {% else %}
+        <a href="{{url_for('main_bp.profile')}}" type="button" class="btn btn-outline-dark me-2 fs-5">Profile</a>
+        <a href="{{url_for('auth_bp.logout')}}" type="button" class="btn btn-outline-dark me-2 fs-5">Logout</a>
+      {% endif %}
+    </div>
+  </div>
+</header>

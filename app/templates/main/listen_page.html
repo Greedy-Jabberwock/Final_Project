@@ -1,0 +1,33 @@
+{% extends 'partials/base.html' %}
+
+{% block title %}
+Listen book
+{% endblock title %}
+
+{% block content %}
+    <div class="album py-5">
+        <div class="container-xxl">
+            <div class="card mx-3 d-flex flex-row align-items-start justify-content-start">
+                <div class="card-body text-center">
+                    <h5 class="card-title justify-self-center pb-3 border-bottom">{{book.title}}</h5>
+                    <table class="table align-items-center">
+                        <thead>
+                            <th>Chapter</th>
+                            <th>Audio</th>
+                        </thead>
+                        <tbody>
+                            {% for t in test %}
+                                <tr>
+                                    <td class="pt-4" scope="row" style="width:30%">{{loop.index}}</td>
+                                    <td style="width:70%">
+                                        <audio src="{{t}}" controls></audio>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

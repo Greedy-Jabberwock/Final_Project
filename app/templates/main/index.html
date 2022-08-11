@@ -1,0 +1,56 @@
+{% extends 'partials/base.html' %}
+
+{% block title %}
+Homepage
+{% endblock title %}
+
+{% block content %}
+    <section class="d-flex flex-column align-content-center justify-content-center pt-3">
+        <ul class="list-group list-group-horizontal mt-1">
+            {% for genre in genres %}
+                <li class="list-group-item list-group-item-action"><a class="nav-link link-dark" href="{{url_for('main_bp.genre_page', genre=genre.genre)}}">{{genre.genre}}</a></li>
+            {% endfor %}
+        </ul>
+    </section>
+    <div class="album py-5">
+        <div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 gx-2 gy-3 justify-content-center">
+                {% for book in books.items %}
+
+                    <div class="card mx-2 text-center d-flex align-items-center justify-content-center">
+                        <div class="pt-2 d-flex align-content-center" style="width:18rem;height:25rem">
+                            <img src="{{book.image}}" class="card-img-top">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{book.title}}</h5>
+                            <p class="card-text"> |
+                                {% for author in book.authors %}
+                                    {{author.fullname}} |
+                                {% endfor %}
+                            </p>
+                            <p class="card-text">{{book.genres.genre}}</p>
+                            <p class="card-text">{{book.release_year}}</p>
+                            <a href="{{url_for('main_bp.details', book_id=book.id)}}" class="btn btn-primary">Details</a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+    <section>
+        {% for page_num in books.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+                {% if books.page == page_num %}
+                    <a class="btn btn-primary" href="{{url_for('main_bp.index', page=page_num)}}">{{ page_num }}</a>
+                {% else %}
+                    <a class="btn btn-outline-primary" href="{{url_for('main_bp.index', page=page_num)}}">{{ page_num }}</a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+    </section>
+
+{% endblock content %}

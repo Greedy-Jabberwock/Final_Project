@@ -1,0 +1,57 @@
+{% extends 'partials/base.html' %}
+
+{% block title %}
+Profile
+{% endblock title %}
+
+{% block content %}
+
+    <section class="d-flex flex-column align-items-center justify-content-center">
+        <h3 class="border-bottom">My info:</h3>
+        <div class="card" style="width: 18rem;">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item p-1"><b>Username:</b> {{current_user.username}}</li>
+                <li class="list-group-item p-1"><b>Email:</b> {{current_user.email}}</li>
+            </ul>
+        </div>
+    </section>
+    <hr>
+    <section class="d-flex flex-column align-items-center justify-content-center">
+        <h4 class="border-bottom">My bookshelf:</h4>
+        {% if current_user.bookshelf.books %}
+            <div class="album py-5">
+                <div class="container-fluid">
+                    <div class="row row-cols-1 row-cols-sm-3 row-cols-md-5 g-3 justify-content-center">
+                        {% for book in books %}
+
+                            <div class="card mx-3 text-center d-flex align-items-center justify-content-center" style="width:20rem;">
+                                <a href="{{url_for('main_bp.delete_book', book_id=book.id)}}">
+                                    <img style="position:absolute;right:0;top:0" src="{{url_for('static', filename='img/delete.png')}}" alt="">
+                                </a>
+
+                                <div class="pt-4 d-flex align-content-center" style="width:240px;height:350px">
+                                    <img src="{{book.image}}" class="card-img-top">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{book.title}}</h5>
+                                    <p class="card-text"> |
+                                        {% for author in book.authors %}
+                                            {{author.fullname}} |
+                                        {% endfor %}
+                                    </p>
+                                    <p class="card-text">{{book.genres.genre}}</p>
+                                    <p class="card-text">{{book.release_year}}</p>
+                                    <a href="{{url_for('main_bp.details', book_id=book.id)}}" class="btn btn-primary">Details</a>
+                                    <a href="{{url_for('main_bp.listening', book_id=book.id)}}" class="btn btn-primary">Listen</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>Your bookshelf still empty. Add something to it.</p>
+        {% endif %}
+    </section>
+
+{% endblock content %}
